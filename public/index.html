@@ -160,7 +160,6 @@
       oculusRenderer.setSize( window.innerWidth, window.innerHeight );
 
       //add track
-<<<<<<< HEAD
 var sampleClosedSpline = new THREE.ClosedSplineCurve3( [
 new THREE.Vector3(-0.33,0.33,2.14),
 new THREE.Vector3(-0.58,0.68,-2.94),
@@ -177,7 +176,6 @@ new THREE.Vector3(-0.1,0.44,4.61)
       path = new PathCamera(pathCamera,sampleClosedSpline);
 
      
-=======
       var sampleClosedSpline = new THREE.ClosedSplineCurve3( [
         new THREE.Vector3(2, 0, -2),
         new THREE.Vector3(2, 0, 2),
@@ -192,7 +190,6 @@ new THREE.Vector3(-0.1,0.44,4.61)
       camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 30);
 
       path = new PathCamera(pathCamera, sampleClosedSpline);
->>>>>>> upstream/develop
 
       // position and point the default camera to the center of the scene
       camera.position.x = 0;
@@ -207,9 +204,6 @@ new THREE.Vector3(-0.1,0.44,4.61)
       // load a sample texture
       var texture = THREE.ImageUtils.loadTexture("textures/ui.png");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
       //  //add the path geometry to test
       // var curveGeometry = new THREE.TubeGeometry(sampleClosedSpline, 200, 10, 1, true); //true == closed curve
       // var pathMesh = new THREE.Mesh(curveGeometry,
@@ -217,12 +211,11 @@ new THREE.Vector3(-0.1,0.44,4.61)
       // scene.add(pathMesh);
 
       //add particle system for raining
-=======
       var materialColor = new THREE.MeshBasicMaterial({  map: texture });
       materialColor.transparent = true
       materialColor.opacity = 1;
       var hudElement = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), materialColor);
-=======
+
       HUDElementMaterialColor = new THREE.MeshBasicMaterial({  map: texture });
       HUDElementMaterialColor.transparent = true
       HUDElementMaterialColor.opacity = 1;
@@ -238,7 +231,7 @@ new THREE.Vector3(-0.1,0.44,4.61)
       HUDPathMaterialColor.transparent = true
       HUDPathMaterialColor.opacity = 1;
       var hudElement = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), HUDPathMaterialColor);
->>>>>>> upstream/develop
+
       hudElement.scale.set(window.innerWidth / 2, window.innerHeight / 2, 1);
       hudElement.position.z = -0.01;
       hudElement.position.x = 1000;
@@ -284,12 +277,12 @@ new THREE.Vector3(-0.1,0.44,4.61)
       scene.add(cube);
 
       // add particle system for raining to the scene
->>>>>>> upstream/develop
+
       rain = new ParticleEngine();
       if(isRaining)
         rain.start();
 
-<<<<<<< HEAD
+
 
       // create a render, sets the background color and the size
       renderer = new THREE.WebGLRenderer({antialias:true,alpha: true});
@@ -305,9 +298,9 @@ new THREE.Vector3(-0.1,0.44,4.61)
       oculusRenderer.setSize( window.innerWidth, window.innerHeight );
 
       //Create a light
-=======
+
       // lights
->>>>>>> upstream/develop
+
       light = new THREE.SpotLight(0xffa573);
       light.position.set(0, 10, 50);
       light.shadowCameraNear = 50;
@@ -332,7 +325,7 @@ new THREE.Vector3(-0.1,0.44,4.61)
       loader = new THREE.JSONLoader();
       loadScene();
 
-<<<<<<< HEAD
+
       // position and point the default camera to the center of the scene
       camera.position.x = -5.95;
       camera.position.y = 1;
@@ -351,11 +344,11 @@ new THREE.Vector3(-0.1,0.44,4.61)
       }
 
       // // add fps stats
-=======
+
       // debug controls
       setControls();
       // add fps stats
->>>>>>> upstream/develop
+
       addStats();
 
       // add the output of the renderer to the html element
@@ -445,7 +438,7 @@ new THREE.Vector3(-0.1,0.44,4.61)
         renderer.render(HUDscene, HUDcamera);
       }
 
-<<<<<<< HEAD
+
       //load the scene
       function loadScene(){
           loader.load("./models/scene2.js",
@@ -473,104 +466,5 @@ new THREE.Vector3(-0.1,0.44,4.61)
       window.addEventListener('resize', handleResize, false);
 
     </script>
-=======
-      requestAnimationFrame( render ); 
-      stats.update();
-      
-    }
-
-    var prevX = -10000, prevY = -10000;
-
-    function updatePointer() {
-      //pointerMesh;
-      console.log("camera: " +pathCamera.position.x);
-      console.log("pointer: " +pointerMesh.position.x);
-      // 500 x 500
-      // camera.position : 10 000 = x : 500
-
-      var moving = false;
-      if(prevX != pathCamera.position.x || prevY != pathCamera.position.z) {
-        prevX = pathCamera.position.x;
-        prevY = pathCamera.position.z;
-        moving = true;
-      }
-
-      if(moving) {
-        var x = (pathCamera.position.x * 500) / 1000;
-        var y = (pathCamera.position.z * 500) / 1000;
-
-        pointerMesh.position.x = pointerMesh.position.x +x;
-        pointerMesh.position.y = pointerMesh.position.y +y;
-
-        pointerMesh.updateMatrix();
-        pointerMesh.updateMatrixWorld();
-      }
-
-    }
-
-    function updateHUDVisibility() {
-      // HUD fade out
-      if(controlGUI.HUDenabled == false && HUDisVisible) {
-        if(HUDElementMaterialColor.opacity != 0)
-          HUDElementMaterialColor.opacity = HUDElementMaterialColor.opacity - 0.1;
-
-        if(HUDElementMaterialColor.opacity < 0.1) {
-          HUDisVisible = false;
-          HUDElementMaterialColor.opacity = 0;
-        }
-
-      }
-      // HUD fade in
-      else if (controlGUI.HUDenabled == true && !HUDisVisible) {
-        if(HUDElementMaterialColor.opacity != 1)
-          HUDElementMaterialColor.opacity = HUDElementMaterialColor.opacity + 0.1;
-
-        if(HUDElementMaterialColor.opacity > 0.9) {
-          HUDisVisible = true;
-          HUDElementMaterialColor.opacity = 1;
-        }
-      }
-    }
-
-    function addStats() {
-      stats = new Stats();
-      stats.setMode(0);
-      stats.domElement.style.position = 'absolute';
-      stats.domElement.style.left = '10px';
-      stats.domElement.style.top = '10px';
-      container.appendChild(stats.domElement);
-    }
-
-    //load the scene
-    function loadScene() {
-        loader.load("./models/scene.js",
-        function(model,materials){
-          scene_mesh = new THREE.Mesh(model,new THREE.MeshFaceMaterial( materials ));
-          scene_mesh.name = 'scene';
-          scene_mesh.rotation.y = Math.PI;
-          scene_mesh.receiveShadow = true;
-          scene_mesh.castShadow = true;
-          scene.add(scene_mesh);
-        });
-    }
-    
-    /**
-     * Function handles the resize event. This make sure the camera and the renderer
-     * are updated at the correct moment.
-     */
-    function handleResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        oculusRenderer.setSize( window.innerWidth, window.innerHeight );
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    }     
-
-    window.onload = init;
-    // calls the handleResize function when the window is resized
-    window.addEventListener('resize', handleResize, false);
-
-  </script>
-
->>>>>>> upstream/develop
   </body>
 </html>

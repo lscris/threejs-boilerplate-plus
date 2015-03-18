@@ -19,7 +19,6 @@ function PathCamera(camera,curve) {
   this.pathCamera = camera;
   this.parent.add( this.pathCamera );
 
-<<<<<<< HEAD
 
   this.update = function(step){
       // Try Animate Camera Along Spline
@@ -27,7 +26,6 @@ function PathCamera(camera,curve) {
       var t = (step % LOOP)/LOOP;
 
       var position = this.path.parameters.path.getPointAt( t );
-=======
   this.update = function(step, oculusEnabled) {
       // Try Animate Camera Along Spline
       var LOOP = 1000;
@@ -36,7 +34,6 @@ function PathCamera(camera,curve) {
 
       var position = this.path.parameters.path.getPointAt( t );
       //console.log(position);
->>>>>>> upstream/develop
       position.multiplyScalar( this.scale );
 
       // interpolation
