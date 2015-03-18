@@ -4,7 +4,7 @@
 *
 */
 
-function PathCamera(camera,curve){
+function PathCamera(camera,curve) {
 
   var SEGMENTS = 200;
   var RADIUS_SEGMENTS = 1;
@@ -19,6 +19,7 @@ function PathCamera(camera,curve){
   this.pathCamera = camera;
   this.parent.add( this.pathCamera );
 
+<<<<<<< HEAD
 
   this.update = function(step){
       // Try Animate Camera Along Spline
@@ -26,6 +27,16 @@ function PathCamera(camera,curve){
       var t = (step % LOOP)/LOOP;
 
       var position = this.path.parameters.path.getPointAt( t );
+=======
+  this.update = function(step, oculusEnabled) {
+      // Try Animate Camera Along Spline
+      var LOOP = 1000;
+      var t = (step % LOOP)/LOOP;
+      //console.log(t);
+
+      var position = this.path.parameters.path.getPointAt( t );
+      //console.log(position);
+>>>>>>> upstream/develop
       position.multiplyScalar( this.scale );
 
       // interpolation
@@ -51,8 +62,12 @@ function PathCamera(camera,curve){
       // Camera Orientation 2 - up orientation via normal
       if (!this.lookAhead)
         lookAt.copy( position ).add( direction );
-      this.pathCamera.matrix.lookAt(this.pathCamera.position, lookAt, this.normal);
-      this.pathCamera.rotation.setFromRotationMatrix( this.pathCamera.matrix, this.pathCamera.rotation.order );
+
+      // if oculusEnabled we don't have to do that beacuse the oculus controls (DK2Controls) will the the camere where to look at.
+      if(!oculusEnabled) {
+        this.pathCamera.matrix.lookAt(this.pathCamera.position, lookAt, this.normal);
+        this.pathCamera.rotation.setFromRotationMatrix( this.pathCamera.matrix, this.pathCamera.rotation.order );
+      }
 
     };
 
@@ -62,26 +77,28 @@ function PathCamera(camera,curve){
 
 };
 
-PathCamera.prototype.takeStep = function(start, end, time) {
+PathCamera.prototype.takeStep = function(start, end, time, oculusEnabled) {
 
-        var pos = {x:start};
-        var target = {x:end};
+        if(!isOverlayVisible) {
 
-        var self = this;
+          var pos = {x:start};
+          var target = {x:end};
 
-            var tween = new TWEEN.Tween(pos )
-                    .to(target, time )
-                    .easing(TWEEN.Easing.Circular.Out)
-                    .onStart( function() {
-                      //TODO
-                    })
-                    .onUpdate( function () {
+          var self = this;
 
-                      self.update(pos.x);
-                    } )
-                    .onComplete(function() {
-                      //TODO
-                    })
-                    .start();
+              var tween = new TWEEN.Tween(pos )
+                      .to(target, time )
+                      .easing(TWEEN.Easing.Circular.Out)
+                      .onStart( function() {
+                        //TODO
+                      })
+                      .onUpdate( function () {
+
+                        self.update(pos.x, oculusEnabled);
+                      } )
+                      .onComplete(function() {
+                        //TODO
+                      })
+                      .start();
+        }
 };
-
